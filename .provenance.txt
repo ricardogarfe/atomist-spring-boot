@@ -18,3 +18,19 @@ description: My new project
 root_package: com.myorg
 service_class_name: MyService
 
+####
+
+# editor info
+name: atomist-project-templates.spring-boot-common-editors.AddDockerMavenBuild
+group: atomist-project-templates
+artifact: spring-boot-common-editors
+version: 1.0.5
+
+# backing git repo
+repo: git@github.com:atomist-project-templates/spring-boot-common-editors.git
+branch: master
+sha: 4ed046fdc66fd8b12941b6b52c0fc06c11f929d5
+
+# parameter values
+dockerRepository: dokerhub
+
