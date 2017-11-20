@@ -1,8 +1,7 @@
-FROM openjdk:8u121-jdk-alpine
+FROM maven:3.5.2-jdk-8
 
-WORKDIR $USER_HOME_DIR
+WORKDIR /src
 
-COPY src
-COPY pom.xml
+COPY . /src
 
 CMD ["mvn", "sonar:sonar"]
