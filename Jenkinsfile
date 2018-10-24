@@ -11,8 +11,10 @@ pipeline {
   }
 
   stages {
-    steps {
-        sh 'printenv'
+    stage ('environemt') {
+      steps {
+          sh 'printenv'
+      }
     }
 
     stage('test') {
