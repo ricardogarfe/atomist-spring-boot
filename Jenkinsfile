@@ -13,16 +13,17 @@ pipeline {
   stages {
     stage('test') {
       steps {
-          sh 'mvn test -DtestFailureIgnore=true'
-          junit 'target/surefire-reports/*.xml'
+          sh 'mvn test -Dmaven.test.failure.ignore=true'
+          junit 
       }
-    }
-    stage('notify') {
-      steps {
-        script { 
-          resultNotifier.populateGlobalVariables(this)
-          def attachments = resultNotifier.generateTestResultAttachment(this)
-          resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
+      post {
+        always {
+          junit 'target/surefire-reports/*.xml'
+          script { 
+            resultNotifier.populateGlobalVariables(this)
+            def attachments = resultNotifier.generateTestResultAttachment(this)
+            resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
+          }
         }
       }
     }
