@@ -1,14 +1,16 @@
+@Library('slack-notifier') _
+
 pipeline {
   agent any
   stages {
     stage('Clean') {
       steps {
-        sh 'mvn test'
-        library 'slack-notifier'
-
-        populateGlobalVariables(this)
-        def attachments = generateTestResultAttachment(this)
-        notifySlack(text, channel, attachments, slackHook)
+        script { 
+          sh 'mvn test'
+          populateGlobalVariables(this)
+          def attachments = generateTestResultAttachment(this)
+          notifySlack(text, channel, attachments, slackHook)
+        }
       }
     }
     stage('package') {
