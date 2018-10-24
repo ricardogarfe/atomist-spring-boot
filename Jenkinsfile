@@ -3,16 +3,12 @@ pipeline {
   stages {
     stage('Clean') {
       steps {
-        parallel(
-          "Clean": {
-            sh 'mvn clean'
-            
-          },
-          "Test": {
-            sh 'mvn test'
-            
-          }
-        )
+        sh 'mvn test'
+        library 'slack-notifier'
+
+        populateGlobalVariables(this)
+        def attachments = generateTestResultAttachment(this)
+        notifySlack(text, channel, attachments, slackHook)
       }
     }
     stage('package') {
