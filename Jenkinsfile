@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-          sh 'mvn test'
+          sh 'mvn test -DtestFailureIgnore=true'
           junit 'target/surefire-reports/*.xml'
       }
     }
