@@ -6,21 +6,23 @@ pipeline {
       maven 'Maven 3.3.9' 
       jdk 'jdk8' 
   }
+  environment {
+      SLACK_HOOK = credentials('slack-hook')
+  }
 
   stages {
-    stage('Clean') {
+    stage('test') {
       steps {
-        script { 
           sh 'mvn test'
-          populateGlobalVariables(this)
-          def attachments = generateTestResultAttachment(this)
-          notifySlack(text, channel, attachments, slackHook)
-        }
       }
     }
-    stage('package') {
+    stage('notify') {
       steps {
-        sh 'mvn package'
+        script { 
+          populateGlobalVariables(this)
+          def attachments = generateTestResultAttachment(this)
+          notifySlack(text, channel, attachments, "${SLACK_HOOK}")
+        }
       }
     }
   }
