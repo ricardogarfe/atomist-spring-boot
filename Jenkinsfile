@@ -21,7 +21,7 @@ pipeline {
         script { 
           resultNotifier.populateGlobalVariables(this)
           def attachments = resultNotifier.generateTestResultAttachment(this)
-          resultNotifier.notifySlack(text, channel, attachments, "${SLACK_HOOK}")
+          resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
         }
       }
     }
