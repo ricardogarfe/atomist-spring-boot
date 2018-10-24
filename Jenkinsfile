@@ -19,9 +19,9 @@ pipeline {
     stage('notify') {
       steps {
         script { 
-          populateGlobalVariables(this)
-          def attachments = generateTestResultAttachment(this)
-          notifySlack(text, channel, attachments, "${SLACK_HOOK}")
+          resultNotifier.populateGlobalVariables(this)
+          def attachments = resultNotifier.generateTestResultAttachment(this)
+          resultNotifier.notifySlack(text, channel, attachments, "${SLACK_HOOK}")
         }
       }
     }
