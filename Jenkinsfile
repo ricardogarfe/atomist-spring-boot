@@ -13,6 +13,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
+          sh 'printenv'
           sh 'mvn test -Dmaven.test.failure.ignore=true'
       }
       post {
