@@ -13,7 +13,7 @@ node {
             }
 
             stage('test') {
-                sh 'mvn test -Dmaven.test.failure.ignore=true'
+                sh 'mvn test'
             }
             stage ('notify') {
                 junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
