@@ -5,7 +5,7 @@ node {
         try {
 
             stage('Checkout') {
-                def scmVars = checkout scm
+                checkout scm
             }
 
             stage('Configure'){
