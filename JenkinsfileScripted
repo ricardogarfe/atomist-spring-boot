@@ -23,9 +23,9 @@ node {
                 resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
             }
 
-        } catch (e) {
+        } catch (exception) {
                 resultNotifier.populateGlobalVariables(this)
-                def attachments = resultNotifier.generateErrorMessage(this)
+                def attachments = resultNotifier.generateErrorMessage(this, exception)
                 resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
         }
     }
