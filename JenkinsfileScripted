@@ -1,0 +1,26 @@
+@Library('slack-notifier') _
+
+node {
+    withCredentials([string(credentialsId: 'slack-hook', variable: 'SLACK_HOOK')]) {
+        try {
+
+            stage('test') {
+                withMaven(maven: 'Maven 3.3.9') {
+                    sh 'mvn test -Dmaven.test.failure.ignore=true'
+                }
+            }
+            stage ('notify') {
+                junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
+                archiveArtifacts 'target/surefire-reports/**'
+                resultNotifier.populateGlobalVariables(this)
+                def attachments = resultNotifier.generateTestResultAttachment(this)
+                resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
+            }
+
+        } catch {
+                resultNotifier.populateGlobalVariables(this)
+                def attachments = resultNotifier.generateErrorkMessage(this)
+                resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
+        }
+    }
+}
