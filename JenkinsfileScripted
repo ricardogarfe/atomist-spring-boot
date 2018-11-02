@@ -4,6 +4,10 @@ node {
     withCredentials([string(credentialsId: 'slack-hook', variable: 'SLACK_HOOK')]) {
         try {
 
+            stage('Checkout') {
+                def scmVars = checkout scm
+            }
+
             stage('Configure'){
                 env.PATH = "${tool 'Maven 3.3.9'}/bin:${env.PATH}"
             }
