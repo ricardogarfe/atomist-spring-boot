@@ -13,8 +13,9 @@ node {
             }
 
             stage('test') {
-                sh 'mvn test'
+                sh 'mvn test -Dmaven.test.failure.ignore=true'
             }
+
             stage ('notify') {
                 junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
                 archiveArtifacts 'target/surefire-reports/**'
@@ -27,6 +28,8 @@ node {
                 resultNotifier.populateGlobalVariables(this)
                 def attachments = resultNotifier.generateErrorMessage(this, exception)
                 resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
+                // Throw exception to break the build
+                throw exception
         }
     }
 }
