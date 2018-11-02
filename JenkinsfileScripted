@@ -4,10 +4,12 @@ node {
     withCredentials([string(credentialsId: 'slack-hook', variable: 'SLACK_HOOK')]) {
         try {
 
+            stage('Configure'){
+                env.PATH = "${tool 'Maven 3.3.9'}/bin:${env.PATH}"
+            }
+
             stage('test') {
-                withMaven(maven: 'Maven 3.3.9') {
-                    sh 'mvn test -Dmaven.test.failure.ignore=true'
-                }
+                sh 'mvn test -Dmaven.test.failure.ignore=true'
             }
             stage ('notify') {
                 junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
