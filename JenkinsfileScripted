@@ -21,12 +21,22 @@ node {
                 archiveArtifacts 'target/surefire-reports/**'
                 resultNotifier.populateGlobalVariables(this)
                 def attachments = resultNotifier.generateTestResultAttachment(this)
+
+                def imageAttachments = attachments.get(0)
+                imageAttachments.put('thumb_url', "https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/ar.png")
+                attachments.set(0, imageAttachments)
+
                 resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
             }
 
         } catch (exception) {
                 resultNotifier.populateGlobalVariables(this)
                 def attachments = resultNotifier.generateErrorMessage(this, exception)
+                
+                def imageAttachments = attachments.get(0)
+                imageAttachments.put('thumb_url', "https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/ar.png")
+                attachments.set(0, imageAttachments)
+
                 resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
                 // Throw exception to break the build
                 throw exception
