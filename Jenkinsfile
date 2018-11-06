@@ -22,7 +22,7 @@ pipeline {
           script { 
             resultNotifier.populateGlobalVariables(this)
             def attachments = resultNotifier.generateTestResultAttachment(this)
-            def imageAttachents = attachments.get(0)
+            def imageAttachments = attachments.get(0)
             imageAttachments.put('thumb_url', "https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/ar.png")
             attachments.set(0, imageAttachments)
             resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
