@@ -27,6 +27,9 @@ node {
                 attachments.set(0, imageAttachments)
 
                 resultNotifier.notifySlack("", "jenkins-builds", attachments, "${SLACK_HOOK}")
+                
+                sh 'echo ${env.BRANCH_NAME}'
+                sh 'echo ${env.GIT_BRANCH}'
             }
 
         } catch (exception) {
