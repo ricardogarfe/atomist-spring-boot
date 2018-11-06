@@ -20,7 +20,6 @@ pipeline {
         always {
           junit 'target/surefire-reports/*.xml'
           script { 
-            resultNotifier.populateGlobalVariables(this)
             def attachments = resultNotifier.generateTestResultAttachment(this)
             def imageAttachments = attachments.get(0)
             imageAttachments.put('thumb_url', "https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/ar.png")
