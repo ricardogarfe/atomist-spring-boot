@@ -1,17 +1,15 @@
 @Library('slack-notifier') _
 
+def scmVars = null
+
 node {
     withCredentials([string(credentialsId: 'slack-hook', variable: 'SLACK_HOOK')]) {
         try {
 
             stage('Checkout') {
-                checkout scm
+                scmVars = checkout scm
                 echo sh(script: 'env', returnStdout: true)
-                echo scm.branches[0].name
-                echo "${BRANCH}"
-                echo "${scm.branches[0].name}"
-                echo "${env.BRANCH}"
-
+                echo "${scmVars}"
             }
 
             stage('Configure'){
