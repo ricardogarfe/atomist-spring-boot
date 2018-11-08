@@ -1,6 +1,6 @@
 @Library('slack-notifier') _
 
-def scmVars = null
+@Field Map scmVars = null
 
 node {
     withCredentials([string(credentialsId: 'slack-hook', variable: 'SLACK_HOOK')]) {
