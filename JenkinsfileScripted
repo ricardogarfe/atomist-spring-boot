@@ -8,6 +8,8 @@ node {
                 checkout scm
                 echo sh(script: 'env', returnStdout: true)
                 echo scm.branches[0].name
+                echo "${BRANCH}"
+                echo "scm.branches[0].name"
 
             }
 
