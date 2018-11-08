@@ -10,6 +10,7 @@ node {
                 echo scm.branches[0].name
                 echo "${BRANCH}"
                 echo "${scm.branches[0].name}"
+                echo "${env.BRANCH}"
 
             }
 
